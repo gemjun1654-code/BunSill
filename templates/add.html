@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>분실물 등록</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <style>
+    .back-button {
+      display: inline-block;
+      margin-bottom: 20px;
+      padding: 8px 16px;
+      background-color: #e5e7eb;
+      color: #374151;
+      border-radius: 6px;
+      font-weight: 500;
+      transition: all 0.3s ease;
+    }
+    .back-button:hover {
+      background-color: #d1d5db;
+      transform: translateX(-2px);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a href="/" class="back-button">← 목록으로 돌아가기</a>
+    
+    <h1>분실물 등록</h1>
+
+    <form action="/add" method="POST" enctype="multipart/form-data">
+
+      <label>물건 이름</label>
+      <input type="text" name="item_name" required>
+
+      <label>분실 장소</label>
+      <input type="text" name="location" required>
+
+      <label>분실 날짜</label>
+      <input type="date" name="lost_date">
+
+      <label>상세 설명</label>
+      <textarea name="description"></textarea>
+
+      <label>카테고리</label>
+      <select name="category">
+        <option value="가방">가방</option>
+        <option value="전자기기">전자기기</option>
+        <option value="지갑/카드">지갑/카드</option>
+        <option value="의류">의류</option>
+        <option value="기타" selected>기타</option>
+      </select>
+
+      <label>사진 (선택)</label>
+      <input type="file" name="image" accept="image/*">
+
+      <button type="submit">등록하기</button>
+
+    </form>
+  </div>
+</body>
+</html>

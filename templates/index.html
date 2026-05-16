@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>분실물 목록</title>
+  <link rel="stylesheet" href="/static/style.css">
+
+  <style>
+    .category-btn {
+      padding: 8px 14px;
+      margin-right: 8px;
+      margin-bottom: 12px;
+      background-color: white;
+      color: #374151;
+      border: 1px solid #e5e7eb;
+      border-radius: 6px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .category-btn:hover {
+      border-color: #2563eb;
+      color: #2563eb;
+      background-color: #f0f9ff;
+    }
+
+    .category-btn.active {
+      background-color: #2563eb;
+      color: white;
+      border-color: #2563eb;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    }
+
+    .admin-bar {
+      background-color: #fef3c7;
+      border: 1px solid #fcd34d;
+      padding: 12px 16px;
+      border-radius: 6px;
+      margin-bottom: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .admin-bar span {
+      color: #92400e;
+      font-weight: 500;
+      font-size: 14px;
+    }
+
+    .admin-bar a {
+      color: #dc2626;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 13px;
+    }
+
+    .admin-bar a:hover {
+      text-decoration: underline;
+    }
+
+    .top-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 28px;
+      width: 100%;
+    }
+
+    .dashboard-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      height: 40px;
+      padding: 0 16px;
+      background-color: #f0f9ff;
+      color: #0369a1;
+      border-radius: 6px;
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 500;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+      box-sizing: border-box;
+    }
+
+    .dashboard-link:hover {
+      background-color: #e0f2fe;
+    }
+
+    /* 검색 영역 */
+    .search-wrapper {
+      margin-left: auto;
+      width: 430px;
+    }
+
+    .search-form {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      width: 100%;
+      background: transparent !important;
+      border: none !important;
+      box-shadow: none !important;
+      padding: 0 !important;
+    }
+
+    .search-form input {
+      flex: 1;
+      height: 40px;
+      padding: 0 14px;
+      border: 1px solid #d1d5db;
+      border-radius: 6px;
+      font-size: 14px;
+      box-sizing: border-box;
+      margin: 0;
+    }
+
+    .search-form input:focus {
+      outline: none;
+      border-color: #2563eb;
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+    }
+
+    .search-form button {
+      width: 84px;
+      height: 40px;
+      border: none;
+      border-radius: 6px;
+      background-color: #2563eb;
+      color: white;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin: 0;
+      padding: 0;
+      transition: all 0.2s ease;
+    }
+
+    .search-form button:hover {
+      background-color: #1d4ed8;
+    }
+
+    .delete-btn {
+      padding: 6px 12px;
+      background-color: #ef4444;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      font-size: 12px;
+      font-weight: 500;
+      cursor: pointer;
+    }
+
+    .delete-btn:hover {
+      background-color: #dc2626;
+    }
+
+    .found-btn {
+      padding: 6px 12px;
+      background-color: #10b981;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      font-size: 12px;
+      font-weight: 500;
+      cursor: pointer;
+    }
+
+    .found-btn:hover {
+      background-color: #059669;
+    }
+
+    @media (max-width: 768px) {
+      .top-actions {
+        flex-wrap: wrap;
+      }
+
+      .search-wrapper {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+
+    <h1>분실물 목록</h1>
+
+    {% if is_admin %}
+      <div class="admin-bar">
+        <span>👨‍💼 관리자 모드 활성화</span>
+        <a href="/admin/logout">로그아웃</a>
+      </div>
+    {% endif %}
+
+    <div class="top-actions">
+
+      {% if not is_admin %}
+        <a href="/admin" class="dashboard-link">🔐 관리자</a>
+      {% endif %}
+
+      <a href="/add">
+        <button class="btn-primary">+ 새 분실물 등록</button>
+      </a>
+
+      <a href="/dashboard" class="dashboard-link">
+        📊 대시보드
+      </a>
+
+      <!-- 검색 -->
+      <div class="search-wrapper">
+        <form class="search-form" method="GET">
+          <input
+            type="text"
+            name="search"
+            placeholder="물건 이름으로 검색..."
+            value="{{ search_query or '' }}"
+          >
+
+          <button type="submit">
+            🔍 검색
+          </button>
+        </form>
+      </div>
+
+    </div>
+
+    <h3>카테고리로 검색</h3>
+
+    <div>
+      <a href="/">
+        <button class="category-btn {% if not current_category %}active{% endif %}">
+          모든 카테고리
+        </button>
+      </a>
+
+      <a href="/?category=가방">
+        <button class="category-btn {% if current_category == '가방' %}active{% endif %}">
+          👜 가방
+        </button>
+      </a>
+
+      <a href="/?category=전자기기">
+        <button class="category-btn {% if current_category == '전자기기' %}active{% endif %}">
+          📱 전자기기
+        </button>
+      </a>
+
+      <a href="/?category=지갑/카드">
+        <button class="category-btn {% if current_category == '지갑/카드' %}active{% endif %}">
+          💳 지갑/카드
+        </button>
+      </a>
+
+      <a href="/?category=의류">
+        <button class="category-btn {% if current_category == '의류' %}active{% endif %}">
+          👕 의류
+        </button>
+      </a>
+
+      <a href="/?category=기타">
+        <button class="category-btn {% if current_category == '기타' %}active{% endif %}">
+          🔖 기타
+        </button>
+      </a>
+    </div>
+
+    {% if items %}
+      <table>
+        <thead>
+          <tr>
+            <th>물건</th>
+            <th>장소</th>
+            <th>날짜</th>
+            <th>카테고리</th>
+            <th>설명</th>
+
+            {% if is_admin %}
+              <th style="text-align:center;">관리</th>
+            {% endif %}
+          </tr>
+        </thead>
+
+        <tbody>
+          {% for item in items %}
+          <tr>
+
+            <td>
+              {% if item.image_filename %}
+                <a href="/item/{{ item.id }}">
+                  <img
+                    src="/static/uploads/{{ item.image_filename }}"
+                    width="100"
+                    alt="분실물 이미지"
+                    style="cursor:pointer;"
+                  >
+                </a>
+              {% endif %}
+
+              <br>
+
+              <a
+                href="/item/{{ item.id }}"
+                style="text-decoration:none; color:inherit;"
+              >
+                <strong>{{ item.name }}</strong>
+              </a>
+            </td>
+
+            <td>{{ item.location }}</td>
+
+            <td>{{ item.lost_date }}</td>
+
+            <td>
+              <span style="
+                background-color:#f0f9ff;
+                padding:4px 8px;
+                border-radius:4px;
+                font-size:12px;
+                color:#0369a1;
+              ">
+                {{ item.category }}
+              </span>
+            </td>
+
+            <td>{{ item.description }}</td>
+
+            {% if is_admin %}
+            <td style="text-align:center;">
+
+              <a href="/toggle_found/{{ item.id }}">
+                <button class="found-btn">✅ 찾음</button>
+              </a>
+
+              <a
+                href="/delete/{{ item.id }}"
+                onclick="return confirm('정말 삭제하시겠습니까?');"
+              >
+                <button class="delete-btn">🗑️ 삭제</button>
+              </a>
+
+            </td>
+            {% endif %}
+
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+
+    {% else %}
+
+      <div class="empty-message">
+        <p>
+          {% if search_query %}
+            '{{ search_query }}'에 대한 검색 결과가 없습니다.
+          {% elif current_category %}
+            '{{ current_category }}' 카테고리에 등록된 분실물이 없습니다.
+          {% else %}
+            등록된 분실물이 없습니다.
+          {% endif %}
+        </p>
+      </div>
+
+    {% endif %}
+  </div>
+</body>
+</html>

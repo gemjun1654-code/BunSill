@@ -1,0 +1,403 @@
+/* ──────────────────────────────────────────
+   분실물 관리 웹앱 CSS
+   ────────────────────────────────────────── */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --primary-color: #2563eb;
+  --primary-dark: #1e40af;
+  --success-color: #10b981;
+  --danger-color: #ef4444;
+  --gray-light: #f3f4f6;
+  --gray-medium: #d1d5db;
+  --gray-dark: #374151;
+  --text-primary: #111827;
+  --text-secondary: #6b7280;
+  --border-color: #e5e7eb;
+  --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  color: var(--text-primary);
+  background-color: var(--gray-light);
+  line-height: 1.6;
+}
+
+/* ──────────────────────────────────────────
+   레이아웃 & 컨테이너
+   ────────────────────────────────────────── */
+
+body {
+  padding: 20px;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+h1 {
+  font-size: 32px;
+  font-weight: 700;
+  margin-bottom: 10px;
+  color: var(--text-primary);
+}
+
+h2 {
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 15px;
+  color: var(--text-primary);
+}
+
+h3 {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 12px;
+  color: var(--text-primary);
+}
+
+p {
+  color: var(--text-secondary);
+  margin-bottom: 16px;
+}
+
+/* ──────────────────────────────────────────
+   버튼 & 링크
+   ────────────────────────────────────────── */
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border-radius: 6px;
+  border: none;
+  font-weight: 500;
+  font-size: 14px;
+}
+
+/* 기본 버튼 */
+button[type="submit"],
+.btn-primary {
+  background-color: var(--primary-color);
+  color: white;
+  padding: 10px 20px;
+  border: none;
+}
+
+button[type="submit"]:hover,
+.btn-primary:hover {
+  background-color: var(--primary-dark);
+  box-shadow: var(--shadow);
+  transform: translateY(-2px);
+}
+
+button[type="submit"]:active,
+.btn-primary:active {
+  transform: translateY(0);
+}
+
+/* 등록 버튼 (상단) */
+body > a button {
+  background-color: var(--success-color);
+  color: white;
+  padding: 10px 18px;
+  font-size: 14px;
+  border-radius: 6px;
+}
+
+body > a button:hover {
+  background-color: #059669;
+  box-shadow: var(--shadow);
+  transform: translateY(-2px);
+}
+
+/* 카테고리 버튼 */
+.category-btn {
+  padding: 8px 14px;
+  margin-right: 8px;
+  margin-bottom: 12px;
+  background-color: white;
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.category-btn:hover {
+  border-color: var(--primary-color);
+  color: var(--primary-color);
+  background-color: #f0f9ff;
+}
+
+.category-btn.active {
+  background-color: var(--primary-color);
+  color: white;
+  border-color: var(--primary-color);
+  box-shadow: var(--shadow);
+}
+
+/* ──────────────────────────────────────────
+   폼 스타일
+   ────────────────────────────────────────── */
+
+form {
+  background-color: white;
+  padding: 28px;
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+  max-width: 600px;
+  margin: 20px auto;
+}
+
+label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 500;
+  color: var(--text-primary);
+  font-size: 14px;
+}
+
+input[type="text"],
+input[type="date"],
+input[type="file"],
+textarea,
+select {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  font-family: inherit;
+  font-size: 14px;
+  color: var(--text-primary);
+  background-color: white;
+  margin-bottom: 18px;
+  transition: all 0.3s ease;
+}
+
+input[type="text"]:focus,
+input[type="date"]:focus,
+input[type="file"]:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+  background-color: #f8fafc;
+}
+
+textarea {
+  resize: vertical;
+  min-height: 100px;
+  font-family: inherit;
+}
+
+/* ──────────────────────────────────────────
+   테이블 스타일
+   ────────────────────────────────────────── */
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: white;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+}
+
+thead {
+  background-color: var(--gray-light);
+  border-bottom: 2px solid var(--border-color);
+}
+
+th {
+  padding: 14px 16px;
+  text-align: left;
+  font-weight: 600;
+  color: var(--text-primary);
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+td {
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--border-color);
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+
+tbody tr:hover {
+  background-color: #f9fafb;
+}
+
+tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* 이미지 썸네일 */
+img[alt="분실물 이미지"] {
+  border-radius: 6px;
+  display: block;
+  margin-bottom: 8px;
+  object-fit: cover;
+  border: 1px solid var(--border-color);
+}
+
+/* ──────────────────────────────────────────
+   메시지 & 상태
+   ────────────────────────────────────────── */
+
+.empty-message {
+  text-align: center;
+  padding: 40px 20px;
+  color: var(--text-secondary);
+  font-size: 15px;
+}
+
+.empty-message p {
+  margin: 0;
+}
+
+/* ──────────────────────────────────────────
+   섹션 & 간격
+   ────────────────────────────────────────── */
+
+br {
+  line-height: 1.2;
+}
+
+/* 섹션 간격 */
+h1 {
+  margin-top: 0;
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 2px solid var(--border-color);
+}
+
+h3 {
+  margin-top: 20px;
+  margin-bottom: 16px;
+}
+
+/* 등록 링크 */
+body > a {
+  display: inline-block;
+  margin-bottom: 20px;
+}
+
+/* 카테고리 섹션 */
+h3:nth-of-type(1) {
+  font-size: 16px;
+  color: var(--text-primary);
+  margin-top: 0;
+  margin-bottom: 14px;
+}
+
+/* ──────────────────────────────────────────
+   선택 상태 & 포커스
+   ────────────────────────────────────────── */
+
+input[required]:valid,
+select:valid {
+  border-color: var(--success-color);
+}
+
+input[required]:invalid:not(:placeholder-shown) {
+  border-color: var(--danger-color);
+}
+
+/* ──────────────────────────────────────────
+   유틸리티
+   ────────────────────────────────────────── */
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* ──────────────────────────────────────────
+   반응형 (모바일 대응)
+   ────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+  body {
+    padding: 16px;
+  }
+
+  h1 {
+    font-size: 24px;
+  }
+
+  h2 {
+    font-size: 20px;
+  }
+
+  form {
+    padding: 20px;
+  }
+
+  table {
+    font-size: 12px;
+  }
+
+  th, td {
+    padding: 10px 12px;
+  }
+
+  .category-btn {
+    padding: 6px 12px;
+    font-size: 13px;
+    margin-right: 6px;
+  }
+
+  img[alt="분실물 이미지"] {
+    width: 80px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  h1 {
+    font-size: 20px;
+  }
+
+  form {
+    padding: 16px;
+  }
+
+  .category-btn {
+    padding: 6px 10px;
+    font-size: 12px;
+    margin-right: 4px;
+    margin-bottom: 8px;
+  }
+
+  table {
+    font-size: 11px;
+  }
+
+  th, td {
+    padding: 8px 10px;
+  }
+}

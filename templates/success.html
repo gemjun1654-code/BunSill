@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>등록 완료</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <style>
+    .success-container {
+      max-width: 500px;
+      margin: 60px auto;
+      padding: 40px;
+      background-color: white;
+      border-radius: 12px;
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+    
+    .success-icon {
+      font-size: 60px;
+      margin-bottom: 20px;
+    }
+    
+    .success-title {
+      font-size: 24px;
+      font-weight: 700;
+      color: #10b981;
+      margin-bottom: 12px;
+    }
+    
+    .success-message {
+      font-size: 16px;
+      color: #6b7280;
+      margin-bottom: 30px;
+      line-height: 1.6;
+    }
+    
+    .success-item-name {
+      font-size: 18px;
+      font-weight: 600;
+      color: #111827;
+      margin: 16px 0 24px;
+      padding: 12px;
+      background-color: #f0fdf4;
+      border-radius: 6px;
+      border-left: 4px solid #10b981;
+    }
+    
+    .button-group {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+    }
+    
+    .btn-primary, .btn-secondary {
+      padding: 10px 20px;
+      border-radius: 6px;
+      font-weight: 500;
+      cursor: pointer;
+      border: none;
+      transition: all 0.3s ease;
+      font-size: 14px;
+    }
+    
+    .btn-primary {
+      background-color: #10b981;
+      color: white;
+      flex: 1;
+    }
+    
+    .btn-primary:hover {
+      background-color: #059669;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    }
+    
+    .btn-secondary {
+      background-color: #e5e7eb;
+      color: #374151;
+      flex: 1;
+    }
+    
+    .btn-secondary:hover {
+      background-color: #d1d5db;
+      transform: translateY(-2px);
+    }
+  </style>
+</head>
+<body>
+  <div class="success-container">
+    <div class="success-icon">✅</div>
+    
+    <div class="success-title">등록 완료!</div>
+    
+    <div class="success-message">
+      분실물이 성공적으로 등록되었습니다.
+    </div>
+    
+    <div class="success-item-name">
+      📦 {{ item_name }}
+    </div>
+    
+    <div class="button-group">
+      <a href="/" style="flex: 1;"><button class="btn-primary">목록 보기</button></a>
+      <a href="/add" style="flex: 1;"><button class="btn-secondary">계속 등록하기</button></a>
+    </div>
+  </div>
+</body>
+</html>

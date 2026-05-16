@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ item.name }} - 분실물 상세</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <style>
+    .detail-container {
+      max-width: 700px;
+      margin: 30px auto;
+      background-color: white;
+      border-radius: 12px;
+      padding: 30px;
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    }
+    
+    .detail-image {
+      width: 100%;
+      max-height: 400px;
+      object-fit: cover;
+      border-radius: 8px;
+      margin-bottom: 30px;
+      border: 1px solid #e5e7eb;
+    }
+    
+    .detail-info {
+      margin-bottom: 24px;
+    }
+    
+    .detail-label {
+      font-size: 12px;
+      color: #6b7280;
+      text-transform: uppercase;
+      font-weight: 600;
+      margin-bottom: 6px;
+      letter-spacing: 0.5px;
+    }
+    
+    .detail-value {
+      font-size: 18px;
+      font-weight: 500;
+      color: #111827;
+    }
+    
+    .category-badge {
+      display: inline-block;
+      background-color: #f0f9ff;
+      color: #0369a1;
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 500;
+    }
+    
+    .button-group {
+      display: flex;
+      gap: 12px;
+      margin-top: 30px;
+    }
+    
+    .btn-back {
+      flex: 1;
+      padding: 12px;
+      background-color: #e5e7eb;
+      color: #374151;
+      border: none;
+      border-radius: 6px;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+    
+    .btn-back:hover {
+      background-color: #d1d5db;
+      transform: translateY(-2px);
+    }
+    
+    .btn-danger {
+      flex: 1;
+      padding: 12px;
+      background-color: #ef4444;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .btn-danger:hover {
+      background-color: #dc2626;
+      transform: translateY(-2px);
+    }
+  </style>
+</head>
+<body>
+  <div class="detail-container">
+    <a href="/" class="back-button" style="display: block; margin-bottom: 20px;">← 목록으로</a>
+    
+    {% if item.image_filename %}
+      <img src="/static/uploads/{{ item.image_filename }}" alt="{{ item.name }}" class="detail-image">
+    {% endif %}
+    
+    <div class="detail-info">
+      <div class="detail-label">물건 이름</div>
+      <div class="detail-value">{{ item.name }}</div>
+    </div>
+    
+    <div class="detail-info">
+      <div class="detail-label">카테고리</div>
+      <span class="category-badge">{{ item.category }}</span>
+    </div>
+    
+    <div class="detail-info">
+      <div class="detail-label">분실 장소</div>
+      <div class="detail-value">📍 {{ item.location }}</div>
+    </div>
+    
+    <div class="detail-info">
+      <div class="detail-label">분실 날짜</div>
+      <div class="detail-value">📅 {{ item.lost_date }}</div>
+    </div>
+    
+    <div class="detail-info">
+      <div class="detail-label">상세 설명</div>
+      <div class="detail-value">{{ item.description }}</div>
+    </div>
+    
+    {% if is_admin %}
+      <div class="button-group">
+        <a href="/" class="btn-back">목록으로</a>
+        <a href="/delete/{{ item.id }}" onclick="return confirm('정말 삭제하시겠습니까?');" class="btn-danger">🗑️ 삭제</a>
+      </div>
+    {% else %}
+      <div class="button-group">
+        <a href="/" class="btn-back">목록으로 돌아가기</a>
+      </div>
+    {% endif %}
+  </div>
+</body>
+</html>

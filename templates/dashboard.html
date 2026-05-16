@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>분실물 대시보드</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <style>
+    .dashboard-container {
+      max-width: 1000px;
+      margin: 20px auto;
+    }
+    
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 16px;
+      margin-bottom: 30px;
+    }
+    
+    .stat-card {
+      background-color: white;
+      border-radius: 12px;
+      padding: 24px;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+      border-left: 4px solid #2563eb;
+    }
+    
+    .stat-card.found {
+      border-left-color: #10b981;
+    }
+    
+    .stat-card.not-found {
+      border-left-color: #f59e0b;
+    }
+    
+    .stat-number {
+      font-size: 36px;
+      font-weight: 700;
+      color: #2563eb;
+      margin: 12px 0;
+    }
+    
+    .stat-card.found .stat-number {
+      color: #10b981;
+    }
+    
+    .stat-card.not-found .stat-number {
+      color: #f59e0b;
+    }
+    
+    .stat-label {
+      font-size: 14px;
+      color: #6b7280;
+      font-weight: 500;
+    }
+    
+    .category-list {
+      background-color: white;
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 24px;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    }
+    
+    .category-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 0;
+      border-bottom: 1px solid #e5e7eb;
+    }
+    
+    .category-item:last-child {
+      border-bottom: none;
+    }
+    
+    .category-name {
+      font-weight: 500;
+      color: #111827;
+    }
+    
+    .category-count {
+      background-color: #f3f4f6;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-weight: 600;
+      color: #374151;
+      font-size: 14px;
+    }
+    
+    .recent-list {
+      background-color: white;
+      border-radius: 12px;
+      padding: 24px;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    }
+    
+    .recent-item {
+      display: flex;
+      gap: 16px;
+      padding: 16px;
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      margin-bottom: 12px;
+      transition: all 0.3s ease;
+    }
+    
+    .recent-item:hover {
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+      transform: translateY(-2px);
+    }
+    
+    .recent-item:last-child {
+      margin-bottom: 0;
+    }
+    
+    .recent-image {
+      width: 80px;
+      height: 80px;
+      object-fit: cover;
+      border-radius: 6px;
+      background-color: #f3f4f6;
+    }
+    
+    .recent-info {
+      flex: 1;
+    }
+    
+    .recent-name {
+      font-weight: 600;
+      color: #111827;
+      margin-bottom: 4px;
+    }
+    
+    .recent-detail {
+      font-size: 13px;
+      color: #6b7280;
+      margin-bottom: 4px;
+    }
+    
+    .recent-link {
+      display: inline-block;
+      padding: 4px 8px;
+      background-color: #f3f4f6;
+      color: #2563eb;
+      text-decoration: none;
+      border-radius: 4px;
+      font-size: 12px;
+      font-weight: 500;
+    }
+    
+    .recent-link:hover {
+      background-color: #e5e7eb;
+    }
+  </style>
+</head>
+<body>
+  <div class="dashboard-container">
+    <a href="/" class="back-button" style="display: inline-block; margin-bottom: 20px;">← 목록으로</a>
+    
+    <h1>📊 분실물 대시보드</h1>
+    
+    <!-- 통계 카드 -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-label">등록된 분실물</div>
+        <div class="stat-number">{{ stats.total }}</div>
+      </div>
+      
+      <div class="stat-card not-found">
+        <div class="stat-label">찾지 못한 물건</div>
+        <div class="stat-number">{{ stats.not_found }}</div>
+      </div>
+      
+      <div class="stat-card found">
+        <div class="stat-label">찾은 물건</div>
+        <div class="stat-number">{{ stats.found }}</div>
+      </div>
+    </div>
+    
+    <!-- 카테고리별 분석 -->
+    {% if stats.by_category %}
+      <div class="category-list">
+        <h3>📂 카테고리별 분실물</h3>
+        {% for cat, count in stats.by_category %}
+          <div class="category-item">
+            <span class="category-name">{{ cat }}</span>
+            <span class="category-count">{{ count }}개</span>
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+    
+    <!-- 최근 등록 분실물 -->
+    {% if recent %}
+      <div class="recent-list">
+        <h3>🕐 최근 등록된 분실물</h3>
+        {% for item in recent %}
+          <div class="recent-item">
+            {% if item.image_filename %}
+              <img src="/static/uploads/{{ item.image_filename }}" alt="{{ item.name }}" class="recent-image">
+            {% else %}
+              <div class="recent-image" style="display: flex; align-items: center; justify-content: center; color: #d1d5db;">📷</div>
+            {% endif %}
+            
+            <div class="recent-info">
+              <div class="recent-name">{{ item.name }}</div>
+              <div class="recent-detail">📍 {{ item.location }}</div>
+              <div class="recent-detail">📅 {{ item.lost_date }}</div>
+              <a href="/item/{{ item.id }}" class="recent-link">상세보기 →</a>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+  </div>
+</body>
+</html>

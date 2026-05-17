@@ -248,4 +248,4 @@ def item_detail(item_id):
     return render_template("item_detail.html", item=item, is_admin=is_admin())
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=False)
